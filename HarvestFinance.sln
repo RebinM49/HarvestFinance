@@ -13,7 +13,19 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Infrastructure", "Infrastru
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "test", "test", "{16E46B49-4040-41AC-9DC3-A7B0AD015168}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HarvestFinance.Domain", "HarvestFinance.Domain\HarvestFinance.Domain.csproj", "{6B963BFD-165B-453C-8F83-1E8BF25724E4}"
+EndProject
 Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{6B963BFD-165B-453C-8F83-1E8BF25724E4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6B963BFD-165B-453C-8F83-1E8BF25724E4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6B963BFD-165B-453C-8F83-1E8BF25724E4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6B963BFD-165B-453C-8F83-1E8BF25724E4}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
@@ -21,6 +33,7 @@ Global
 		{C0AECED0-5D85-4960-9D9E-0C6F73A90F97} = {566C4A1D-03E2-4C87-A89B-38F43D2F63A4}
 		{593E7FC5-E288-4E35-BA32-CB8BCEBE5A92} = {566C4A1D-03E2-4C87-A89B-38F43D2F63A4}
 		{455B5403-64CF-463C-9EC4-FBFBC3E8823B} = {566C4A1D-03E2-4C87-A89B-38F43D2F63A4}
+		{6B963BFD-165B-453C-8F83-1E8BF25724E4} = {C0AECED0-5D85-4960-9D9E-0C6F73A90F97}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {E0AA5476-FAB1-4745-93BA-DD4B2B5F0714}
