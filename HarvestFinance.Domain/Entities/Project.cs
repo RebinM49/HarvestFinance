@@ -16,9 +16,7 @@ namespace HarvestFinance.Domain.Entities
         public DateTime DateTime { get; set; }
         public ProductType ProductType { get; set; }
         public HarvestType HarvestType { get; set; }
-        protected long _cost;
-        public abstract long Cost { get; protected set; }
-        public abstract long CalculateCost(); 
+        public abstract long Cost { get; set; }
 
         
 
