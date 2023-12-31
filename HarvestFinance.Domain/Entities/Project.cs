@@ -19,6 +19,8 @@ namespace HarvestFinance.Domain.Entities
         protected long _cost;
         public abstract long Cost { get; protected set; }
         public abstract long CalculateCost(); 
+        public string Address { get; set; } 
+        public string CombineName { get; set; }
 
         
 
