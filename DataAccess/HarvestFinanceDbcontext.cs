@@ -30,5 +30,5 @@ public class HarvestFinanceDbcontext : DbContext
     }
 
     public DbSet<Farmer> Farmers { get; set; }
-    //public DbSet<Project> Projects { get; set; }
+    public DbSet<Project> Projects { get; set; }
 }
