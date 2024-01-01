@@ -8,8 +8,13 @@ namespace HarvestFinance.Domain.Entities
 {
     public class SharedBasedProject : Project
     {
+
         public int ProductUnitPrice { get; set; }
         private double _contractRate;
+        public SharedBasedProject() :base()
+        {
+            Cost = CalculateCost();
+        }
         public double ContractRate
         {
             get => _contractRate;
@@ -30,10 +35,6 @@ namespace HarvestFinance.Domain.Entities
                     _cost = value;
                 throw new ArgumentOutOfRangeException();
             }
-        }
-        public SharedBasedProject()
-        {
-            Cost = CalculateCost();
         }
 
         public override long CalculateCost()

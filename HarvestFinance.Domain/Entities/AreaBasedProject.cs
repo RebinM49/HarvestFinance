@@ -9,6 +9,10 @@ namespace HarvestFinance.Domain.Entities;
 public class AreaBasedProject : Project
 {
     private int _areaUnitPrice;
+    public AreaBasedProject() :base()
+    {
+        Cost = CalculateCost();
+    }
     public int AreaUnitPrice
     {
         get => _areaUnitPrice;
@@ -31,10 +35,7 @@ public class AreaBasedProject : Project
             _cost = value;
         }
     }
-    public AreaBasedProject()
-    {
-        Cost = CalculateCost();
-    }
+
 
     public override long CalculateCost()
         => (long)(Area * AreaUnitPrice);
