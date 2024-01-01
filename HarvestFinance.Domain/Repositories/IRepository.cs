@@ -6,9 +6,9 @@ namespace HarvestFinance.Domain.Repositories;
 
 public interface IRepository<TEntity> where TEntity : Common.Entity
 {
-    Task<TEntity?> Get(Guid Id);
-    Task<IEnumerable<TEntity>> GetAll();
+    Task<TEntity?> GetAsync(Guid Id);
+    Task<IEnumerable<TEntity>> GetAllAsync();
     void Update(TEntity entity);
-    Task Add(TEntity entity);
+    Task AddAsync(TEntity entity);
     void Remove(TEntity entity);
 }
