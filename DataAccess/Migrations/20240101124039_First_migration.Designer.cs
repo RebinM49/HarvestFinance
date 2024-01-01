@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DataAccess.Migrations
 {
     [DbContext(typeof(HarvestFinanceDbcontext))]
-    [Migration("20240101094157_First-Init")]
-    partial class FirstInit
+    [Migration("20240101124039_First_migration")]
+    partial class First_migration
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -46,9 +46,6 @@ namespace DataAccess.Migrations
                     b.Property<string>("PhoneNumber")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<Guid>("ProjectId")
-                        .HasColumnType("uniqueidentifier");
 
                     b.HasKey("Id");
 
@@ -97,7 +94,7 @@ namespace DataAccess.Migrations
 
                     b.HasIndex("FarmerId");
 
-                    b.ToTable("Project");
+                    b.ToTable("Projects");
 
                     b.HasDiscriminator<int>("ContractType");
 

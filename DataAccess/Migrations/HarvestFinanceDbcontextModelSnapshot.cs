@@ -44,9 +44,6 @@ namespace DataAccess.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<Guid>("ProjectId")
-                        .HasColumnType("uniqueidentifier");
-
                     b.HasKey("Id");
 
                     b.ToTable("Farmers");
@@ -94,7 +91,7 @@ namespace DataAccess.Migrations
 
                     b.HasIndex("FarmerId");
 
-                    b.ToTable("Project");
+                    b.ToTable("Projects");
 
                     b.HasDiscriminator<int>("ContractType");
 
