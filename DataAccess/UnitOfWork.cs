@@ -11,14 +11,14 @@ namespace DataAccess
     public class UnitOfWork : IUnitOfWork ,IDisposable
     {
         private readonly HarvestFinanceDbcontext _dbcontext;
-        public IFarmerRepository FarmerRepository { get; private set; }
+        public IFarmerRepository Farmers { get; private set; }
 
-        public IProjectRepository ProjectRepository { get; private set; }
+        public IProjectRepository Projects { get; private set; }
         public UnitOfWork(HarvestFinanceDbcontext context ,IFarmerRepository farmerRepo ,IProjectRepository projectRepo )
         {
             _dbcontext = context;
-            FarmerRepository = farmerRepo;
-            ProjectRepository = projectRepo;
+            Farmers = farmerRepo;
+            Projects = projectRepo;
         }
 
         public  async Task<int> CompleteAsync()

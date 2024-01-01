@@ -12,17 +12,17 @@ public class Repository<TEntity> : IRepository<TEntity> where TEntity : Entity
         _context = context;
     }
 
-    public async Task Add(TEntity entity)
+    public async Task AddAsync(TEntity entity)
     {
         await _context.Set<TEntity>().AddAsync(entity);
     }
 
-    public async Task<TEntity?> Get(Guid Id)
+    public async Task<TEntity?> GetAsync(Guid Id)
     {
         return await _context.Set<TEntity>().FindAsync(Id);
     }
 
-    public async Task<IEnumerable<TEntity>> GetAll()
+    public async Task<IEnumerable<TEntity>> GetAllAsync()
     {
         return await _context.Set<TEntity>().AsNoTracking().ToListAsync();
     }

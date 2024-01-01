@@ -43,5 +43,10 @@ namespace HarvestFinance.Domain.Common
         {
             return !(a == b);
         }
+        public override int GetHashCode()
+        {
+            return (GetType().ToString() + Id).GetHashCode();
+        }
+
     }
 }

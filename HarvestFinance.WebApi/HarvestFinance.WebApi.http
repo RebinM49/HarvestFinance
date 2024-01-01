@@ -1,0 +1,6 @@
+@HarvestFinance.WebApi_HostAddress = http://localhost:5031
+
+GET {{HarvestFinance.WebApi_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

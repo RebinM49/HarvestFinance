@@ -10,6 +10,10 @@ namespace HarvestFinance.Domain.Entities
 {
     public abstract class Project : Entity
     {
+        public Project()
+        {
+            Id = Guid.NewGuid();
+        }
         public Guid FarmerId { get; set; }
         public double Weight { get; set; }
         public double Area { get; set; }
@@ -21,6 +25,7 @@ namespace HarvestFinance.Domain.Entities
         public abstract long CalculateCost(); 
         public string Address { get; set; } 
         public string CombineName { get; set; }
+        public ContractType ContractType { get;  set; }
 
         
 

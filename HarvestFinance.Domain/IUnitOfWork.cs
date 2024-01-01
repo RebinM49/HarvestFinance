@@ -9,8 +9,8 @@ namespace HarvestFinance.Domain
 {
     public interface IUnitOfWork
     {
-        public IFarmerRepository FarmerRepository { get; }
-        public IProjectRepository ProjectRepository { get; }
+        public IFarmerRepository Farmers { get; }
+        public IProjectRepository Projects { get; }
         public  Task<int> CompleteAsync();
     }
 }
