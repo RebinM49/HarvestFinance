@@ -1,4 +1,5 @@
-﻿using System;
+﻿using HarvestFinance.Domain.Constants;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -13,6 +14,7 @@ public class AreaBasedProject : Project
     {
         Cost = CalculateCost();
         Date = DateTime.Now;
+        ContractKind = ContractType.AreaBased;
     }
     public int AreaUnitPrice
     {
