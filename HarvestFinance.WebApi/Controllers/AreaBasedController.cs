@@ -20,7 +20,7 @@ namespace HarvestFinance.WebApi.Controllers
             var AreaBased = MapDtoToModel(createAreaDto);
             await _uow.Projects.AddAsync(AreaBased);
             await _uow.CompleteAsync();
-            return CreatedAtAction(nameof(GetProject), new { Id = AreaBased.Id },AreaBased);
+            return Ok();
         }
 
         private AreaBasedProject MapDtoToModel(CreateAreaBasedDto dto)
