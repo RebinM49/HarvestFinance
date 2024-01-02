@@ -25,7 +25,7 @@ namespace HarvestFinance.Domain.Entities
         public abstract long CalculateCost(); 
         public string Address { get; set; } 
         public string CombineName { get; set; }
-        public ContractType ContractType { get;  set; }
+        public ContractType ContractKind { get;  set; }
 
         
 
