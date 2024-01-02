@@ -14,6 +14,7 @@ namespace HarvestFinance.Domain.Entities
         public SharedBasedProject() :base()
         {
             Cost = CalculateCost();
+            DateTime = DateTime.Now;
         }
         public double ContractRate
         {
