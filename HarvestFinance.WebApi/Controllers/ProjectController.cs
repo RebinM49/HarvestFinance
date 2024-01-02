@@ -19,7 +19,7 @@ namespace HarvestFinance.WebApi.Controllers
     [ApiController]
     public class ProjectController : ControllerBase
     {
-        private readonly IUnitOfWork _uow;
+        protected readonly IUnitOfWork _uow;
         public ProjectController(IUnitOfWork uow)
         {
             _uow = uow;
@@ -54,7 +54,7 @@ namespace HarvestFinance.WebApi.Controllers
                 project.ProductType,
                 project.HarvestType,
                 project.Cost,
-                project.ContractType,
+                project.ContractKind,
                 project.Address
                 );
 
