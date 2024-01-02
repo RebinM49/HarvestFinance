@@ -12,7 +12,7 @@ public class AreaBasedProject : Project
     public AreaBasedProject() :base()
     {
         Cost = CalculateCost();
-        DateTime = DateTime.Now;
+        Date = DateTime.Now;
     }
     public int AreaUnitPrice
     {
