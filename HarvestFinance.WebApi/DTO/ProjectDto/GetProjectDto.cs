@@ -8,10 +8,10 @@ public record GetProjectDto(
     double Weight,
     double Area,
     DateTime Date,
-    ProductType Product,
-    HarvestType HarvestType,
+    string Product,
+    string HarvestType,
     long Cost,
-    ContractType Contract,
+    string Contract,
     string Address
     )
 { }
