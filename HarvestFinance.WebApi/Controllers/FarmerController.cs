@@ -38,7 +38,7 @@ public class FarmerController : ControllerBase
     }
 
     [HttpPost]
-    public async Task<ActionResult<Farmer>> PostFarmer(CreateFarmerDTO farmerDto)
+    public async Task<ActionResult<GetFarmerDto>> PostFarmer(CreateFarmerDTO farmerDto)
     {
         Farmer farmer = new()
         {
