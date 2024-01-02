@@ -17,7 +17,7 @@ namespace HarvestFinance.Domain.Entities
         public Guid FarmerId { get; set; }
         public double Weight { get; set; }
         public double Area { get; set; }
-        public DateTime DateTime { get; set; }
+        public DateTime Date { get; set; }
         public ProductType ProductType { get; set; }
         public HarvestType HarvestType { get; set; }
         protected long _cost;
