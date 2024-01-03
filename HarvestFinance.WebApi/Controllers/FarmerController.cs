@@ -55,11 +55,12 @@ public class FarmerController : ControllerBase
 
         await _uow.Farmers.AddAsync(farmer);
         await _uow.CompleteAsync();
-        return CreatedAtAction(nameof(GetFarmer), new { Id = farmer.Id }, farmerDto);
+        var result = new GetFarmerDto(farmer.Id,farmer.FirstName,farmer.LastName,farmer.PhoneNumber, farmer.Address);
+        return CreatedAtAction(nameof(GetFarmer), new { Id = farmer.Id },result );
     }
 
     [HttpPut]
-    public async Task<ActionResult> PutFarmer(Guid id ,UpdateFarmerDto farmerdto)
+    public async Task<ActionResult> PutFarmer([FromRoute]Guid id ,[FromBody]UpdateFarmerDto farmerdto)
     {
         var farmer = await _uow.Farmers.GetAsync(id);
         if (farmer is null)
