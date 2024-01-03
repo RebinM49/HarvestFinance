@@ -11,7 +11,7 @@ namespace HarvestFinance.WebApi.Controllers;
 
 [Route("api/[controller]")]
 [ApiController]
-public abstract class ProjectController : ControllerBase
+public class ProjectController : ControllerBase
 {
     protected readonly IUnitOfWork _uow;
     public ProjectController(IUnitOfWork uow)

@@ -59,7 +59,7 @@ public class FarmerController : ControllerBase
     }
 
     [HttpPut]
-    public async Task<ActionResult> PutFarmer(Guid id ,UpdateCustomerDto farmerdto)
+    public async Task<ActionResult> PutFarmer(Guid id ,UpdateFarmerDto farmerdto)
     {
         var farmer = await _uow.Farmers.GetAsync(id);
         if (farmer is null)

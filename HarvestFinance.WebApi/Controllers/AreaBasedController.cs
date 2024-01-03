@@ -9,10 +9,12 @@ namespace HarvestFinance.WebApi.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class AreaBasedController : ProjectController
+    public class AreaBasedController : ControllerBase
     {
-        public AreaBasedController(IUnitOfWork uow) : base(uow)
+        private readonly IUnitOfWork _uow;
+        public AreaBasedController(IUnitOfWork uow)
         {
+            _uow = uow;
         }
         [HttpPost]
         public async Task<ActionResult<GetProjectDto>> PostAreaBasedProject(CreateAreaBasedDto createAreaDto)

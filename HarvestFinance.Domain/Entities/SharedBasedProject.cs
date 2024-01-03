@@ -9,7 +9,7 @@ public class SharedBasedProject : Project
     private double _contractRate;
     public SharedBasedProject()
     {
-        
+
     }
     public SharedBasedProject(
         Guid farmerId,
@@ -19,10 +19,13 @@ public class SharedBasedProject : Project
         HarvestType harvestingType,
         string address,
         string combineName,
-        int UnitPrice
+        int unitPrice,
+        double contractType
     ) : base(farmerId, weight, area, product, harvestingType, address, combineName)
     {
-        ProductUnitPrice = UnitPrice;
+        ProductUnitPrice = unitPrice;
+        ContractRate = contractType;
+        ContractKind = ContractType.AreaBased;
         Cost = CalculateCost();
     }
     public double ContractRate
@@ -41,13 +44,17 @@ public class SharedBasedProject : Project
         get => _cost;
         protected set
         {
-            if (value > 10000)
-                _cost = value;
-            throw new ArgumentOutOfRangeException();
+            if (value < 10000)
+                throw new ArgumentOutOfRangeException(nameof(Cost)
+                    , message: "calculated value for cost is invalid due to wrong input");
+            _cost = value;
         }
     }
 
     public override long CalculateCost()
-        => (long)(Weight * ContractRate * ProductUnitPrice);
+    {
+        var result = (long)(Weight * ContractRate * ProductUnitPrice);
+        return result;
+    }
 
 }
