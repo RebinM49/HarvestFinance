@@ -12,6 +12,7 @@ public record GetProjectDto(
     string HarvestType,
     long Cost,
     string Contract,
-    string Address
+    string Address,
+    string CombineName
     )
 { }
