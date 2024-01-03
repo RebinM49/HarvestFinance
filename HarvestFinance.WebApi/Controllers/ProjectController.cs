@@ -19,9 +19,16 @@ public class ProjectController : ControllerBase
         _uow = uow;
     }
     [HttpGet]
-    public async Task<ActionResult<IEnumerable<GetProjectDto>>> GetProjects()
+    public async Task<ActionResult<IEnumerable<GetProjectDto>>> GetProjects(
+          [FromQuery] int limit = 5, [FromQuery] int offset = 1, [FromQuery] string filter = ""
+        )
     {
-        var projects = await _uow.Projects.GetAllAsync();
+        IEnumerable<Project> projects;
+        if (!string.IsNullOrEmpty(filter))
+            projects =await _uow.Projects.FindFarmer(filter);
+        else
+            projects = await _uow.Projects.GetAllAsync(limit, offset);
+        
         var projectDto = projects.Select(p => MapToDto(p));
         return Ok(projectDto);
     }
