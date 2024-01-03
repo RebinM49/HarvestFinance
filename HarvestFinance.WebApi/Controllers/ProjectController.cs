@@ -11,7 +11,7 @@ namespace HarvestFinance.WebApi.Controllers;
 
 [Route("api/[controller]")]
 [ApiController]
-public class ProjectController : ControllerBase
+public abstract class ProjectController : ControllerBase
 {
     protected readonly IUnitOfWork _uow;
     public ProjectController(IUnitOfWork uow)
@@ -20,15 +20,9 @@ public class ProjectController : ControllerBase
     }
     [HttpGet]
     public async Task<ActionResult<IEnumerable<GetProjectDto>>> GetProjects(
-          [FromQuery] int limit = 5, [FromQuery] int offset = 1, [FromQuery] string filter = ""
-        )
+          [FromQuery] int limit = 5, [FromQuery] int offset = 1)
     {
-        IEnumerable<Project> projects;
-        if (!string.IsNullOrEmpty(filter))
-            projects =await _uow.Projects.FindFarmer(filter);
-        else
-            projects = await _uow.Projects.GetAllAsync(limit, offset);
-        
+        var projects = await _uow.Projects.GetAllAsync(limit, offset);
         var projectDto = projects.Select(p => MapToDto(p));
         return Ok(projectDto);
     }
@@ -41,7 +35,6 @@ public class ProjectController : ControllerBase
             return NotFound();
         var dto = MapToDto(project);
         return Ok(dto);
-
     }
 
     private GetProjectDto MapToDto(Project project)
