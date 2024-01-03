@@ -9,5 +9,6 @@ namespace HarvestFinance.Domain.Repositories
 {
     public interface IProjectRepository : IRepository<Project>
     {
+        Task<List<Project>> Findproject(string filter);
     }
 }
