@@ -14,7 +14,9 @@ namespace DataAccess
         public IFarmerRepository Farmers { get; private set; }
 
         public IProjectRepository Projects { get; private set; }
-        public UnitOfWork(HarvestFinanceDbcontext context ,IFarmerRepository farmerRepo ,IProjectRepository projectRepo )
+        public UnitOfWork(HarvestFinanceDbcontext context 
+            ,IFarmerRepository farmerRepo 
+            ,IProjectRepository projectRepo )
         {
             _dbcontext = context;
             Farmers = farmerRepo;
