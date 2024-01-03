@@ -17,9 +17,14 @@ public class FarmerController : ControllerBase
         _uow = unitofwork;
     }
     [HttpGet]
-    public async Task<ActionResult<IEnumerable<GetFarmerDto>>> GetFarmers()
+    public async Task<ActionResult<IEnumerable<GetFarmerDto>>> GetFarmers(
+        [FromQuery] int limit=5, [FromQuery] int offset=1, [FromQuery] string filter="")
     {
-        var farmers = await _uow.Farmers.GetAllAsync();
+        IEnumerable<Farmer> farmers;
+        if(!string.IsNullOrEmpty(filter))
+            farmers = await _uow.Farmers.FindFarmer(filter);
+        else
+            farmers = await _uow.Farmers.GetAllAsync(limit, offset);
         var farmerdto = farmers.Select(f
                 => new GetFarmerDto(f.Id, f.FirstName, f.LastName, f.PhoneNumber, f.Address)
                 );
@@ -38,7 +43,7 @@ public class FarmerController : ControllerBase
     }
 
     [HttpPost]
-    public async Task<ActionResult<Farmer>> PostFarmer(CreateFarmerDTO farmerDto)
+    public async Task<ActionResult<GetFarmerDto>> PostFarmer(CreateFarmerDTO farmerDto)
     {
         Farmer farmer = new()
         {
@@ -54,7 +59,7 @@ public class FarmerController : ControllerBase
     }
 
     [HttpPut]
-    public async Task<ActionResult> PutFarmer(Guid id ,UpdateCustomerDto farmerdto)
+    public async Task<ActionResult> PutFarmer(Guid id ,UpdateFarmerDto farmerdto)
     {
         var farmer = await _uow.Farmers.GetAsync(id);
         if (farmer is null)

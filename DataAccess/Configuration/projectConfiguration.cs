@@ -18,7 +18,7 @@ namespace DataAccess.Configuration
             builder.HasOne(p => p.Farmer)
                 .WithMany(f => f.Projects)
                 .HasForeignKey(p => p.FarmerId);
-            builder.HasDiscriminator(h => h.ContractType)
+            builder.HasDiscriminator(h => h.ContractKind)
                 .HasValue<AreaBasedProject>(ContractType.AreaBased)
                 .HasValue<SharedBasedProject>(ContractType.SharedBased);
         }

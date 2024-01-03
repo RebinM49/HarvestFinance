@@ -1,6 +1,8 @@
-﻿using System;
+﻿using HarvestFinance.Domain.Constants;
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -9,8 +11,24 @@ namespace HarvestFinance.Domain.Entities;
 public class AreaBasedProject : Project
 {
     private int _areaUnitPrice;
-    public AreaBasedProject() :base()
+
+    public AreaBasedProject()
     {
+        
+    }
+    public AreaBasedProject(
+        Guid farmerId,
+        double weight,
+        double area,
+        ProductType product,
+        HarvestType harvestingType,
+        string address,
+        string combineName,
+        int UnitPrice
+        ) :base(farmerId,weight,area,product,harvestingType,address,combineName)
+    {
+        AreaUnitPrice = UnitPrice;
+        ContractKind = ContractType.AreaBased;
         Cost = CalculateCost();
     }
     public int AreaUnitPrice
@@ -18,7 +36,7 @@ public class AreaBasedProject : Project
         get => _areaUnitPrice;
         set
         {
-            if (_areaUnitPrice < 1000_000)
+            if (value < 1_000_000)
                 throw new ArgumentOutOfRangeException(nameof(AreaUnitPrice)
                     , message: "The value for area unit price is not valid.");
             _areaUnitPrice = value;
