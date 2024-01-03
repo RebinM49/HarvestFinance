@@ -22,9 +22,9 @@ public class Repository<TEntity> : IRepository<TEntity> where TEntity : Entity
         return await _context.Set<TEntity>().FindAsync(Id);
     }
 
-    public async Task<IEnumerable<TEntity>> GetAllAsync()
+    public async Task<IEnumerable<TEntity>> GetAllAsync(int pageSize, int page)
     {
-        return await _context.Set<TEntity>().AsNoTracking().ToListAsync();
+        return await _context.Set<TEntity>().Skip((page-1)*pageSize).Take(pageSize).AsNoTracking().ToListAsync();
     }
 
     public void Remove(TEntity entity)
