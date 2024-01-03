@@ -60,7 +60,8 @@ public class ProjectController : ControllerBase
             project.HarvestType.ToString(),
             project.Cost,
             project.ContractKind.ToString(),
-            project.Address
+            project.Address,
+            project.CombineName
             );
 
         return dto;
