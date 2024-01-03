@@ -17,12 +17,13 @@ namespace HarvestFinance.WebApi.Controllers
             _uow = uow;
         }
         [HttpPost]
-        public async Task<ActionResult<GetProjectDto>> PostAreaBasedProject(CreateAreaBasedDto createAreaDto)
+        public async Task<IActionResult> PostAreaBasedProject(CreateAreaBasedDto createAreaDto)
         {
             var AreaBased = MapDtoToModel(createAreaDto);
             await _uow.Projects.AddAsync(AreaBased);
             await _uow.CompleteAsync();
-            return Ok();
+            var result = MapModeltoDto(AreaBased);
+            return Ok(result);
         }
 
         private AreaBasedProject MapDtoToModel(CreateAreaBasedDto dto)
@@ -37,6 +38,26 @@ namespace HarvestFinance.WebApi.Controllers
                 dto.AreaUnitPrice
                 );
             return project;
+
+        }
+        private GetProjectDto MapModeltoDto(AreaBasedProject project)
+        {
+            var result = new GetProjectDto
+                (
+                    project.Id,
+                    project.FarmerId,
+                    project.Weight,
+                    project.Area,
+                    project.Date,
+                    project.ProductType.ToString(),
+                    project.HarvestType.ToString(),
+                    project.Cost,
+                    project.ContractKind.ToString(),
+                    project.Address,
+                    project.CombineName
+
+                );
+            return result;
 
         }
     }

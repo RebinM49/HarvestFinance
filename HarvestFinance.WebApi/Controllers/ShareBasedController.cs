@@ -11,18 +11,19 @@ namespace HarvestFinance.WebApi.Controllers
     public class ShareBasedController : ControllerBase
     {
         private readonly IUnitOfWork _uow;
-        public ShareBasedController(IUnitOfWork uow) 
+        public ShareBasedController(IUnitOfWork uow)
         {
             _uow = uow;
         }
 
         [HttpPost]
-        public async Task<IActionResult> PostShareBasedProject(CreateSharedBasedDTo  createSharedDto)
+        public async Task<IActionResult> PostShareBasedProject(CreateSharedBasedDTo createSharedDto)
         {
-            var sharedBasedProject = MapDtoToModel(createSharedDto);
-            await _uow.Projects.AddAsync(sharedBasedProject);
+            var sharedBased = MapDtoToModel(createSharedDto);
+            await _uow.Projects.AddAsync(sharedBased);
             await _uow.CompleteAsync();
-            return CreatedAtAction(nameof(ProjectController.GetProject),new {id =  sharedBasedProject.Id},createSharedDto);
+            var result = MapModeltoDto(sharedBased);
+            return Ok(result);
         }
 
         private SharedBasedProject MapDtoToModel(CreateSharedBasedDTo dto)
@@ -39,6 +40,24 @@ namespace HarvestFinance.WebApi.Controllers
                 );
             return project;
 
+        }
+        private GetProjectDto MapModeltoDto(SharedBasedProject project)
+        {
+            var result = new GetProjectDto(
+                project.Id,
+                project.FarmerId,
+                project.Weight,
+                project.Area,
+                project.Date,
+                project.ProductType.ToString(),
+                project.HarvestType.ToString(),
+                project.Cost,
+                project.ContractKind.ToString(),
+                project.Address,
+                project.CombineName
+                
+                );
+            return result;
         }
     }
 }
