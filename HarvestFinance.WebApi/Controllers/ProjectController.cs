@@ -37,6 +37,17 @@ public abstract class ProjectController : ControllerBase
         return Ok(dto);
     }
 
+    [HttpDelete]
+    public async Task<IActionResult> DeleteProject(Guid id)
+    {
+        var project = await _uow.Projects.GetAsync(id);
+        if (project is null)
+            return NotFound();
+        _uow.Projects.Remove(project);
+        await _uow.CompleteAsync();
+        return Ok();
+    }
+
     private GetProjectDto MapToDto(Project project)
     {
         var dto = new GetProjectDto(
