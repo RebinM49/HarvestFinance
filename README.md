@@ -1,2 +1,2 @@
 # HarvestFinance
-This is a console application for tracking payments of farmers.
+This is a WebApi project for tracking payments of farmers.
