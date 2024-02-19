@@ -12,9 +12,9 @@ public class Repository<TEntity> : IRepository<TEntity> where TEntity : Entity
         _context = context;
     }
 
-    public async Task AddAsync(TEntity entity)
+    public async void Add(TEntity entity)
     {
-        await _context.Set<TEntity>().AddAsync(entity);
+        _context.Set<TEntity>().Add(entity);
     }
 
     public async Task<TEntity?> GetAsync(Guid Id)
@@ -32,8 +32,13 @@ public class Repository<TEntity> : IRepository<TEntity> where TEntity : Entity
         _context.Set<TEntity>().Remove(entity);
     }
 
-    public  void Update(TEntity entity)
+    public void Update(TEntity entity)
     {
-         _context.Entry(entity).State = EntityState.Modified;
+        _context.Entry(entity).State = EntityState.Modified;
+    }
+
+    public async Task SaveAsync()
+    {
+        await _context.SaveChangesAsync();
     }
 }
