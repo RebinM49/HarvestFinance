@@ -2,6 +2,7 @@
 using DataAccess.Repositories;
 using HarvestFinance.Domain.Repositories;
 using Microsoft.EntityFrameworkCore;
+using Newtonsoft.Json.Serialization;
 
 namespace HarvestFinance.WebApi;
 
@@ -10,7 +11,12 @@ internal static class StartupHelperExtensions
     public static WebApplication ConfigureServices(this WebApplicationBuilder builder)
     {
         var config = builder.Configuration;
-        builder.Services.AddControllers();
+        builder.Services.AddControllers(config =>
+            config.ReturnHttpNotAcceptable = true
+            ).AddNewtonsoftJson(setupaction =>
+                setupaction.SerializerSettings.ContractResolver =
+                new CamelCasePropertyNamesContractResolver());
+
         // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
         builder.Services.AddEndpointsApiExplorer();
         builder.Services.AddSingleton<IConfiguration>(config);
