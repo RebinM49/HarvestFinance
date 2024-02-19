@@ -10,9 +10,10 @@ namespace HarvestFinance.WebApi_V2.Profiles
         {
             CreateMap<Farmer, FarmerDto>()
                 .ForMember(dest => dest.Name,
-                option => option.MapFrom(src => $"{src.FirstName + src.LastName}"));
+                option => option.MapFrom(src => $"{src.FirstName} {src.LastName}"));
 
-            CreateMap<FarmerForCreationDto, FarmerDto>();
+            CreateMap<FarmerForCreationDto, Farmer>();
+            CreateMap<FarmerForPatchDto, Farmer>().ReverseMap();
                 
         }
     }
