@@ -11,27 +11,27 @@ internal static class StartupHelperExtensions
     public static WebApplication ConfigureServices(this WebApplicationBuilder builder)
     {
         var config = builder.Configuration;
-        builder.Services.AddControllers(config =>
+
+        builder.Services.AddControllers( config =>
             config.ReturnHttpNotAcceptable = true
-            ).AddNewtonsoftJson(setupaction =>
+            ).AddNewtonsoftJson( setupaction =>
                 setupaction.SerializerSettings.ContractResolver =
-                new CamelCasePropertyNamesContractResolver());
+                new CamelCasePropertyNamesContractResolver() );
 
         // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
         builder.Services.AddEndpointsApiExplorer();
-        builder.Services.AddSingleton<IConfiguration>(config);
+        builder.Services.AddSingleton<IConfiguration>( config );
         builder.Services.AddSwaggerGen();
-        builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+        builder.Services.AddAutoMapper( AppDomain.CurrentDomain.GetAssemblies() );
 
         //  Data Access Services
-        builder.Services.AddDbContext<DbContext, HarvestFinanceDbcontext>(
+        builder.Services.AddDbContext<DbContext , HarvestFinanceDbcontext>(
         op => op.UseSqlServer(
-            builder.Configuration.GetConnectionString("HarvestFinance_I")
-        ));
-
-        builder.Services.AddScoped<IFarmerRepository, FarmerRepository>();
-        builder.Services.AddScoped<IProjectRepository, ProjectRepository>();
-        builder.Services.AddScoped(typeof(IRepository<>),typeof(Repository<>));
+            builder.Configuration.GetConnectionString( "HarvestFinance_I" )
+        ) );
+        builder.Services.AddScoped<IFarmerRepository , FarmerRepository>();
+        builder.Services.AddScoped<IProjectRepository , ProjectRepository>();
+        builder.Services.AddScoped( typeof( IRepository<> ) , typeof( Repository<> ) );
 
 
         return builder.Build();
@@ -47,14 +47,14 @@ internal static class StartupHelperExtensions
         }
         else
         {
-            app.UseExceptionHandler(configure =>
+            app.UseExceptionHandler( configure =>
             {
-                configure.Run(async context =>
+                configure.Run( async context =>
                 {
                     context.Response.StatusCode = 500;
-                    await context.Response.WriteAsync("OOPs , SomeThing bad just happened !");
-                });
-            });
+                    await context.Response.WriteAsync( "OOPs , SomeThing bad just happened !" );
+                } );
+            } );
         }
 
         app.MapControllers();
