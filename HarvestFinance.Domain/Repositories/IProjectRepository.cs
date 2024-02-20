@@ -1,13 +1,13 @@
 ﻿using HarvestFinance.Domain.Entities;
+using HarvestFinance.Domain;
+using HarvestFinance.Domain.Models;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace HarvestFinance.Domain.Repositories
+
+namespace HarvestFinance.Domain.Repositories;
+
+public interface IProjectRepository : IRepository<Project>
 {
-    public interface IProjectRepository : IRepository<Project>
-    {
-    }
+    Task<IEnumerable<CustomProjectDto>> GetCustomProjects();
 }
