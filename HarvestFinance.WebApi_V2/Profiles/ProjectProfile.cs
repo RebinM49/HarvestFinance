@@ -9,8 +9,8 @@ namespace HarvestFinance.WebApi_V2.Profiles
     {
         public ProjectProfile()
         {
-            CreateMap<AreaBasedProject, FullInfoProjectDto>();
-            CreateMap<AreaBasedProject, FullInfoProjectDto>();
+            CreateMap<SharedBasedProject, ProjectDto>();
+            CreateMap<AreaBasedProject, ProjectDto>();
             CreateMap<Project, FullInfoProjectDto>();
             CreateMap<CustomProjectDto,FullInfoProjectDto>();
 
