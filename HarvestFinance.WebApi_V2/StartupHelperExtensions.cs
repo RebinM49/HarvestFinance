@@ -23,12 +23,16 @@ internal static class StartupHelperExtensions
         builder.Services.AddSwaggerGen();
         builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
+        //  Data Access Services
         builder.Services.AddDbContext<DbContext, HarvestFinanceDbcontext>(
         op => op.UseSqlServer(
             builder.Configuration.GetConnectionString("HarvestFinance_I")
         ));
 
         builder.Services.AddScoped<IFarmerRepository, FarmerRepository>();
+        builder.Services.AddScoped<IProjectRepository, ProjectRepository>();
+        builder.Services.AddScoped(typeof(IRepository<>),typeof(Repository<>));
+
 
         return builder.Build();
     }
