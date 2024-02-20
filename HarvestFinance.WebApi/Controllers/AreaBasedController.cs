@@ -20,7 +20,7 @@ namespace HarvestFinance.WebApi.Controllers
         public async Task<IActionResult> PostAreaBasedProject(CreateAreaBasedDto createAreaDto)
         {
             var AreaBased = MapDtoToModel(createAreaDto);
-            await _uow.Projects.AddAsync(AreaBased);
+             _uow.Projects.Add(AreaBased);
             await _uow.CompleteAsync();
             var result = MapModeltoDto(AreaBased);
             return Ok(result);
