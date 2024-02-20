@@ -1,5 +1,4 @@
-﻿using HarvestFinance.Domain.Constants;
-using HarvestFinance.Domain.Entities;
+﻿using HarvestFinance.Domain.Entities;
 using HarvestFinance.Domain.Models;
 using HarvestFinance.Domain.Repositories;
 using Microsoft.EntityFrameworkCore;
@@ -33,8 +32,16 @@ public class ProjectRepository : Repository<Project>, IProjectRepository
                 ProductType = project.ProductType.ToString(),
                 Cost = project.Cost
             };
-
-        
         return await projects.AsNoTracking().ToListAsync();
+    }
+
+    async Task<IEnumerable<Project>> IProjectRepository.GetProjectsForFarmer(Guid farmerId)
+    {
+        return await Dbcontext.Projects.Where(f => f.FarmerId == farmerId).AsNoTracking().ToListAsync();
+    }
+
+    async Task<bool> IProjectRepository.FarmerExists(Guid farmerId)
+    {
+        return await Dbcontext.Farmers.AnyAsync(f => f.Id == farmerId);
     }
 }
