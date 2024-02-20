@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using HarvestFinance.Domain.Entities;
 using HarvestFinance.Domain.Repositories;
 using HarvestFinance.WebApi_V2.Models;
 using Microsoft.AspNetCore.Mvc;
@@ -31,7 +32,7 @@ public class ProjectController : ControllerBase
         return Ok( projectsToReturn );
     }
 
-    [HttpGet( "{projectId}" )]
+    [HttpGet( "{projectId}" , Name = "GetProjectForFarmer" )]
     public async Task<ActionResult<ProjectDto>> GetProject(Guid farmerId , Guid projectId)
     {
         if (!await _projectRepo.FarmerExists( farmerId ))
@@ -46,4 +47,37 @@ public class ProjectController : ControllerBase
         return Ok( _mapper.Map<ProjectDto>( project ) );
     }
 
+    [HttpPost]
+    public async Task<ActionResult<ProjectDto>> AddProject(Guid farmerId , ProjectForCreationDto projectDto)
+    {
+        if (!await _projectRepo.FarmerExists( farmerId ))
+        {
+            return NotFound();
+        }
+
+        var project = ConditionalAdd( projectDto );
+        project.FarmerId = farmerId;
+        _projectRepo.Add( project );
+        await _projectRepo.SaveAsync();
+        var projectToReturn = _mapper.Map<ProjectDto>( project );
+
+        return CreatedAtAction( nameof( GetProject) ,
+            new { farmerId = project.FarmerId , projectId = project.Id } ,projectToReturn );
+
+    }
+
+    private Project ConditionalAdd(ProjectForCreationDto projectDto)
+    {
+        //  TODO : Needs a projectResult type which has the project property and a Result Property
+        if (projectDto.ContractKind == Domain.Constants.ContractType.AreaBased)
+        {
+            return _mapper.Map<AreaBasedProject>( projectDto );
+        }
+        else
+        {
+            return _mapper.Map<SharedBasedProject>( projectDto );
+        }
+    }
+
+    
 }
