@@ -4,7 +4,7 @@ namespace HarvestFinance.WebApi_V2.Models
 {
     public class ProjectForCreationDto
     {
-
+        public int UnitPrice { get; set; }
         public double Weight { get; set; }
         public double Area { get; set; }
         public ProductType ProductType { get; set; }
