@@ -53,7 +53,7 @@ public class FarmerController : ControllerBase
             Address = farmerDto.Address
         };
 
-        await _uow.Farmers.AddAsync(farmer);
+        _uow.Farmers.Add(farmer);
         await _uow.CompleteAsync();
         var result = new GetFarmerDto(farmer.Id,farmer.FirstName,farmer.LastName,farmer.PhoneNumber, farmer.Address);
         return CreatedAtAction(nameof(GetFarmer), new { Id = farmer.Id },result );
