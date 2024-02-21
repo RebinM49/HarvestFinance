@@ -47,33 +47,47 @@ public class ProjectController : ControllerBase
         return Ok( _mapper.Map<ProjectDto>( project ) );
     }
 
-    [HttpPost]
-    public async Task<ActionResult<ProjectDto>> AddProject(Guid farmerId , ProjectForCreationDto projectDto)
+    [HttpPost("areabase")]
+    public async Task<ActionResult<ProjectDto>> AddAreaProject(Guid farmerId , AreaBaseProjectForCreationDto projectDto)
     {
         if (!await _projectRepo.FarmerExists( farmerId ))
         {
             return NotFound();
         }
 
-        var project = ConditionalAdd( projectDto , farmerId );
-        project.FarmerId = farmerId;
+        var project = CreateAreaBaseObject( projectDto , farmerId );
+
         _projectRepo.Add( project );
         await _projectRepo.SaveAsync();
-        var projectToReturn = _mapper.Map<ProjectDto>( project );
 
+        var projectToReturn = _mapper.Map<ProjectDto>( project );
         return CreatedAtAction( nameof( GetProject ) ,
             new { farmerId = project.FarmerId , projectId = project.Id } , projectToReturn );
 
     }
-
-    private Project ConditionalAdd(ProjectForCreationDto projectDto , Guid farmerId)
+    [HttpPost("sharebase")]
+    public async Task<ActionResult<ProjectDto>> AddShareProject(Guid farmerId , ShareBaseProjectForCreationDto projectDto)
     {
-        //  TODO : Needs a projectResult type which has the project property and a Result Property
-        if (projectDto.ContractKind == Domain.Constants.ContractType.AreaBased)
+        if (!await _projectRepo.FarmerExists( farmerId ))
         {
+            return NotFound();
+        }
+
+        var project = CreateShareBaseObject( projectDto , farmerId );
+
+        _projectRepo.Add( project );
+        await _projectRepo.SaveAsync();
+
+        var projectToReturn = _mapper.Map<ProjectDto>( project );
+        return CreatedAtAction( nameof( GetProject ) ,
+            new { farmerId = project.FarmerId , projectId = project.Id } , projectToReturn );
+
+    }
+    private Project CreateAreaBaseObject(AreaBaseProjectForCreationDto projectDto , Guid farmerId)
+    {
             var project = new AreaBasedProject(
                 farmerId ,
-                projectDto.Weight ,
+                0,
                 projectDto.Area ,
                 projectDto.ProductType ,
                 projectDto.HarvestType ,
@@ -82,24 +96,22 @@ public class ProjectController : ControllerBase
                 projectDto.UnitPrice );
 
             return project;
+    }
+    private Project CreateShareBaseObject(ShareBaseProjectForCreationDto projectDto , Guid farmerId)
+    {
+        var project = new SharedBasedProject(
+            farmerId ,
+            projectDto.Weight ,
+            projectDto.Area ,
+            projectDto.ProductType ,
+            projectDto.HarvestType ,
+            projectDto.Address ,
+            projectDto.CombineName ,
+            projectDto.UnitPrice ,
+            projectDto.contractRate );
 
-        }
-        else
-        {
-            var project = new SharedBasedProject(
-                farmerId ,
-                projectDto.Weight ,
-                projectDto.Area ,
-                projectDto.ProductType ,
-                projectDto.HarvestType ,
-                projectDto.Address ,
-                projectDto.CombineName ,
-                projectDto.UnitPrice ,
-                0.05);
 
-            return project;
-
-        }
+        return project;
     }
 
 
