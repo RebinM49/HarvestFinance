@@ -12,33 +12,34 @@ public class AreaBasedProject : Project
 {
     private int _areaUnitPrice;
 
-    public AreaBasedProject()
+    private  AreaBasedProject()
     {
         
     }
     public AreaBasedProject(
-        Guid farmerId,
-        double weight,
-        double area,
-        ProductType product,
-        HarvestType harvestingType,
-        string address,
-        string combineName,
+        Guid farmerId ,
+        double weight ,
+        double area ,
+        ProductType product ,
+        HarvestType harvestingType ,
+        string address ,
+        string combineName ,
         int UnitPrice
-        ) :base(farmerId,weight,area,product,harvestingType,address,combineName)
+        ) : base( farmerId , weight , area , product , harvestingType , address , combineName )
     {
         AreaUnitPrice = UnitPrice;
         ContractKind = ContractType.AreaBased;
         Cost = CalculateCost();
     }
+
     public int AreaUnitPrice
     {
         get => _areaUnitPrice;
         set
         {
             if (value < 1_000_000)
-                throw new ArgumentOutOfRangeException(nameof(AreaUnitPrice)
-                    , message: "The value for area unit price is not valid.");
+                throw new ArgumentOutOfRangeException( nameof( AreaUnitPrice )
+                    , message: "The value for area unit price is not valid." );
             _areaUnitPrice = value;
         }
     }
@@ -48,14 +49,14 @@ public class AreaBasedProject : Project
         protected set
         {
             if (value < 10000)
-                throw new ArgumentOutOfRangeException(nameof(Cost) 
-                    ,message:"calculated value for cost is invalid due to wrong input");
-            _cost = value;
+                throw new ArgumentOutOfRangeException( nameof( Cost )
+                    , message: "calculated value for cost is invalid due to wrong input" );
+            _cost = (long)Area * AreaUnitPrice;
         }
     }
 
 
     public override long CalculateCost()
         => (long)(Area * AreaUnitPrice);
-
+    
 }
