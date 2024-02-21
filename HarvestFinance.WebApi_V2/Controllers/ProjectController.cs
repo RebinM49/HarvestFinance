@@ -55,29 +55,52 @@ public class ProjectController : ControllerBase
             return NotFound();
         }
 
-        var project = ConditionalAdd( projectDto );
+        var project = ConditionalAdd( projectDto , farmerId );
         project.FarmerId = farmerId;
         _projectRepo.Add( project );
         await _projectRepo.SaveAsync();
         var projectToReturn = _mapper.Map<ProjectDto>( project );
 
-        return CreatedAtAction( nameof( GetProject) ,
-            new { farmerId = project.FarmerId , projectId = project.Id } ,projectToReturn );
+        return CreatedAtAction( nameof( GetProject ) ,
+            new { farmerId = project.FarmerId , projectId = project.Id } , projectToReturn );
 
     }
 
-    private Project ConditionalAdd(ProjectForCreationDto projectDto)
+    private Project ConditionalAdd(ProjectForCreationDto projectDto , Guid farmerId)
     {
         //  TODO : Needs a projectResult type which has the project property and a Result Property
         if (projectDto.ContractKind == Domain.Constants.ContractType.AreaBased)
         {
-            return _mapper.Map<AreaBasedProject>( projectDto );
+            var project = new AreaBasedProject(
+                farmerId ,
+                projectDto.Weight ,
+                projectDto.Area ,
+                projectDto.ProductType ,
+                projectDto.HarvestType ,
+                projectDto.Address ,
+                projectDto.CombineName ,
+                projectDto.UnitPrice );
+
+            return project;
+
         }
         else
         {
-            return _mapper.Map<SharedBasedProject>( projectDto );
+            var project = new SharedBasedProject(
+                farmerId ,
+                projectDto.Weight ,
+                projectDto.Area ,
+                projectDto.ProductType ,
+                projectDto.HarvestType ,
+                projectDto.Address ,
+                projectDto.CombineName ,
+                projectDto.UnitPrice ,
+                0.05);
+
+            return project;
+
         }
     }
 
-    
+
 }
