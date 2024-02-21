@@ -7,7 +7,7 @@ public class SharedBasedProject : Project
 
     public int ProductUnitPrice { get; set; }
     private double _contractRate;
-    public SharedBasedProject()
+    private SharedBasedProject()
     {
 
     }
@@ -20,11 +20,11 @@ public class SharedBasedProject : Project
         string address,
         string combineName,
         int unitPrice,
-        double contractType
+        double contractRate
     ) : base(farmerId, weight, area, product, harvestingType, address, combineName)
     {
         ProductUnitPrice = unitPrice;
-        ContractRate = contractType;
+        ContractRate = contractRate;
         ContractKind = ContractType.AreaBased;
         Cost = CalculateCost();
     }
