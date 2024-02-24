@@ -41,7 +41,7 @@ public abstract class Project : Entity
     public HarvestType HarvestType { get; set; }
     protected long _cost;
     public abstract long Cost { get; protected set; }
-    public abstract long CalculateCost();
+    public abstract void ApplyLogic();
     public string Address { get; set; }
     public string CombineName { get; set; }
     public ContractType ContractKind { get; set; }

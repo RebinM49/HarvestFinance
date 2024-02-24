@@ -26,7 +26,7 @@ public class SharedBasedProject : Project
         ProductUnitPrice = unitPrice;
         ContractRate = contractRate;
         ContractKind = ContractType.AreaBased;
-        Cost = CalculateCost();
+        ApplyLogic();
     }
     public double ContractRate
     {
@@ -51,10 +51,9 @@ public class SharedBasedProject : Project
         }
     }
 
-    public override long CalculateCost()
+    public override void ApplyLogic()
     {
-        var result = (long)(Weight * ContractRate * ProductUnitPrice);
-        return result;
+        Cost= (long)(Weight * ContractRate * ProductUnitPrice);
     }
 
 }

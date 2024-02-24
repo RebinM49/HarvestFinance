@@ -12,9 +12,9 @@ public class AreaBasedProject : Project
 {
     private int _areaUnitPrice;
 
-    private  AreaBasedProject()
+    private AreaBasedProject()
     {
-        
+
     }
     public AreaBasedProject(
         Guid farmerId ,
@@ -29,7 +29,7 @@ public class AreaBasedProject : Project
     {
         AreaUnitPrice = UnitPrice;
         ContractKind = ContractType.AreaBased;
-        Cost = CalculateCost();
+        ApplyLogic();
     }
 
     public int AreaUnitPrice
@@ -55,8 +55,11 @@ public class AreaBasedProject : Project
         }
     }
 
+    public override void ApplyLogic()
+    {
 
-    public override long CalculateCost()
-        => (long)(Area * AreaUnitPrice);
-    
+        Cost = (long)(Area * AreaUnitPrice);
+    }
+
+
 }
