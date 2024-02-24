@@ -13,8 +13,11 @@ namespace HarvestFinance.WebApi_V2.Profiles
             CreateMap<AreaBasedProject , ProjectDto>();
             CreateMap<Project , FullInfoProjectDto>();
             CreateMap<CustomProjectDto , FullInfoProjectDto>();
+            CreateMap<AreaBasedProject , AreaBaseForPatchDto>()
+                .ReverseMap().ForMember( patch => patch.AreaUnitPrice ,
+                options => options.MapFrom( area => area.UnitPrice )
+                );
 
         }
     }
 }
-    

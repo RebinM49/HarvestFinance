@@ -2,6 +2,7 @@
 using HarvestFinance.Domain.Entities;
 using HarvestFinance.Domain.Repositories;
 using HarvestFinance.WebApi_V2.Models;
+using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
 
 namespace HarvestFinance.WebApi_V2.Controllers;
@@ -47,7 +48,7 @@ public class ProjectController : ControllerBase
         return Ok( _mapper.Map<ProjectDto>( project ) );
     }
 
-    [HttpPost("areabase")]
+    [HttpPost( "areabase" )]
     public async Task<ActionResult<ProjectDto>> AddAreaProject(Guid farmerId , AreaBaseProjectForCreationDto projectDto)
     {
         if (!await _projectRepo.FarmerExists( farmerId ))
@@ -65,7 +66,7 @@ public class ProjectController : ControllerBase
             new { farmerId = project.FarmerId , projectId = project.Id } , projectToReturn );
 
     }
-    [HttpPost("sharebase")]
+    [HttpPost( "sharebase" )]
     public async Task<ActionResult<ProjectDto>> AddShareProject(Guid farmerId , ShareBaseProjectForCreationDto projectDto)
     {
         if (!await _projectRepo.FarmerExists( farmerId ))
@@ -85,17 +86,17 @@ public class ProjectController : ControllerBase
     }
     private Project CreateAreaBaseObject(AreaBaseProjectForCreationDto projectDto , Guid farmerId)
     {
-            var project = new AreaBasedProject(
-                farmerId ,
-                0,
-                projectDto.Area ,
-                projectDto.ProductType ,
-                projectDto.HarvestType ,
-                projectDto.Address ,
-                projectDto.CombineName ,
-                projectDto.UnitPrice );
+        var project = new AreaBasedProject(
+            farmerId ,
+            0 ,
+            projectDto.Area ,
+            projectDto.ProductType ,
+            projectDto.HarvestType ,
+            projectDto.Address ,
+            projectDto.CombineName ,
+            projectDto.UnitPrice );
 
-            return project;
+        return project;
     }
     private Project CreateShareBaseObject(ShareBaseProjectForCreationDto projectDto , Guid farmerId)
     {
@@ -115,4 +116,30 @@ public class ProjectController : ControllerBase
     }
 
 
+    [HttpPatch( "areabase/{projectId}" )]
+    public async Task<ActionResult<ProjectDto>> PartialUpdateAreaProject(Guid farmerId , 
+        Guid projectId ,
+        JsonPatchDocument<AreaBaseForPatchDto> patchDocument)
+    {
+        if (!await _projectRepo.FarmerExists( farmerId ))
+        {
+            return NotFound( $"farmer with this Id Dose not exists {farmerId}" );
+        }
+
+        var projectFromRepo = await _projectRepo.GetAsync( projectId );
+        if (projectFromRepo is null)
+        {
+            return NotFound( $"Project with {projectId} Id dose not exists" );
+        }
+
+        var projectToPatch = _mapper.Map<AreaBaseForPatchDto>(projectFromRepo);
+        patchDocument.ApplyTo(projectToPatch );
+        _mapper.Map( projectToPatch , projectFromRepo );
+        projectFromRepo.ApplyLogic();
+        _projectRepo.Update(projectFromRepo );
+        await _projectRepo.SaveAsync();
+        var projectToReturnDto = _mapper.Map<ProjectDto>( projectFromRepo );
+        return Ok(projectToReturnDto);
+
+    }
 }
