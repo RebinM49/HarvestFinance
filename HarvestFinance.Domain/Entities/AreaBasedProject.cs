@@ -29,7 +29,7 @@ public class AreaBasedProject : Project
     {
         AreaUnitPrice = UnitPrice;
         ContractKind = ContractType.AreaBased;
-        ApplyLogic();
+        CalculateCost();
     }
 
     public int AreaUnitPrice
@@ -55,7 +55,7 @@ public class AreaBasedProject : Project
         }
     }
 
-    public override void ApplyLogic()
+    public override void CalculateCost()
     {
 
         Cost = (long)(Area * AreaUnitPrice);
