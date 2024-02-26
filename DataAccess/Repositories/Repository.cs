@@ -1,4 +1,5 @@
 ﻿using HarvestFinance.Domain.Common;
+using HarvestFinance.Domain.Entities;
 using HarvestFinance.Domain.Repositories;
 using Microsoft.EntityFrameworkCore;
 
@@ -12,7 +13,7 @@ public class Repository<TEntity> : IRepository<TEntity> where TEntity : Entity
         _context = context;
     }
 
-    public async void Add(TEntity entity)
+    public void Add(TEntity entity)
     {
         _context.Set<TEntity>().Add(entity);
     }
@@ -34,6 +35,10 @@ public class Repository<TEntity> : IRepository<TEntity> where TEntity : Entity
 
     public void Update(TEntity entity)
     {
+        if (entity is Project project)
+        {
+            project.CalculateCost();
+        }
         _context.Entry(entity).State = EntityState.Modified;
     }
 

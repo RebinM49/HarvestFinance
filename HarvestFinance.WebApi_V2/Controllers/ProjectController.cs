@@ -135,7 +135,6 @@ public class ProjectController : ControllerBase
         var projectToPatch = _mapper.Map<AreaBaseForPatchDto>(projectFromRepo);
         patchDocument.ApplyTo(projectToPatch );
         _mapper.Map( projectToPatch , projectFromRepo );
-        projectFromRepo.ApplyLogic();
         _projectRepo.Update(projectFromRepo );
         await _projectRepo.SaveAsync();
         var projectToReturnDto = _mapper.Map<ProjectDto>( projectFromRepo );

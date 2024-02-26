@@ -1,10 +1,4 @@
 ﻿using HarvestFinance.Domain.Constants;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace HarvestFinance.Domain.Entities;
 
@@ -51,13 +45,13 @@ public class AreaBasedProject : Project
             if (value < 10000)
                 throw new ArgumentOutOfRangeException( nameof( Cost )
                     , message: "calculated value for cost is invalid due to wrong input" );
-            _cost = (long)Area * AreaUnitPrice;
+
+            _cost = value;
         }
     }
 
     public override void CalculateCost()
     {
-
         Cost = (long)(Area * AreaUnitPrice);
     }
 
