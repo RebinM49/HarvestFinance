@@ -20,7 +20,7 @@ namespace HarvestFinance.WebApi.Controllers
         public async Task<IActionResult> PostShareBasedProject(CreateSharedBasedDTo createSharedDto)
         {
             var sharedBased = MapDtoToModel(createSharedDto);
-            await _uow.Projects.AddAsync(sharedBased);
+            _uow.Projects.Add( sharedBased );
             await _uow.CompleteAsync();
             var result = MapModeltoDto(sharedBased);
             return Ok(result);

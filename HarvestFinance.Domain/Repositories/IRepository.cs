@@ -9,6 +9,7 @@ public interface IRepository<TEntity> where TEntity : Common.Entity
     Task<TEntity?> GetAsync(Guid Id);
     Task<IEnumerable<TEntity>> GetAllAsync(int pageSize=5,int page = 1);
     void Update(TEntity entity);
-    Task AddAsync(TEntity entity);
+    void Add(TEntity entity);
     void Remove(TEntity entity);
+    Task SaveAsync();
 }
